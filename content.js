@@ -6,6 +6,14 @@
 }*/
 
 
+//replace shortcut icon
+let links = document.getElementsByTagName("link");
+for(let i in links){
+    if(links[i].rel && links[i].rel == "shortcut icon"){
+        links[i].href = "https://abs.twimg.com/favicons/twitter.2.ico";
+    }
+}
+
 setTimeout(() => {
     //replace X with twitter logo
     let headers = document.getElementsByTagName("h1");
@@ -18,6 +26,4 @@ setTimeout(() => {
     let tweetButton = tweetButtons[tweetButtons.length-1].getElementsByClassName("css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3");
     tweetButton[1].innerHTML = tweetButton[1].innerHTML.replace("Post", "Tweet");
         
-    
-
   }, 2000);
