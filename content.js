@@ -18,7 +18,6 @@ function waitForButton() {
          },2000);
     });
 }
-
 function waitForHomeIcon() {
     return new Promise((resolve) => {
         setTimeout(() => {
