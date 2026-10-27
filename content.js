@@ -3,12 +3,12 @@ window.onload = function() {
     console.log("onload");
     replaceHeader();
     replacePostButton();
-    replaceHomeIcon();
+    //replaceHomeIcon();
 };
 
 window.onclick = function(){
     console.log("onclick");
-    replaceHomeIcon();
+    //replaceHomeIcon();
 };
 
 function waitForLogo() {
@@ -63,6 +63,13 @@ async function replacePostButton(){
         }
     }
 }
+async function removeForYouTab(){
+    let forYou = document.getElementById("base-ui-_R_1alpcp9j5d556_");
+    if(forYou){
+        forYou.remove()
+    }
+}
+
 
 async function replaceHomeIcon(){
     let classBar = await waitForHomeIcon();
@@ -81,8 +88,10 @@ let sidebarTimeout;
 const observer = new MutationObserver(mutations => {
     clearTimeout(sidebarTimeout);
     sidebarTimeout = setTimeout(() => {
-        replaceHomeIcon();
+        //replaceHomeIcon();
+        removeForYouTab();
         replaceHeader();
+        replacePostButton();
         observer.disconnect(); // Disconnect after the first successful modification to avoid unnecessary loops
     }, 100);
 });
