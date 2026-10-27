@@ -75,15 +75,35 @@ function replacePostButton(){
             console.log(tweetButton)
             tweetButton.innerHTML = tweetButton.innerHTML.replace("Post", "Tweet");
         }
+    else{
+        tweetButton = document.querySelectorAll('button[data-testid="tweetButtonInline"]');
+        let targetElement = Array.from(tweetButton).find(el => el.innerHTML.includes('Post'));
+        targetElement.innerHTML = targetElement.innerHTML.replace("Post", "Tweet");
+
+    }
 
 }
 function removeForYouTab(){
+
     let forYou = document.querySelector('button[data-pinned-timeline="for-you"]');
     if(forYou){
+        console.log('if "For You"');
         forYou.remove();
     }
+    
     else{
-        console.log('failed to find "For You"');
+        console.log('else "For You"');
+
+        let forYou2 = document.querySelector('div[aria-label="Home timeline"]');
+        
+        let forYou3 = forYou2.querySelector('nav[role="navigation"]');
+        console.log(forYou3);
+
+        forYou = forYou3.querySelector('div[role="presentation"]');
+        console.log(forYou);
+
+        forYou.remove();
+        //console.log('failed to find "For You"');
     }
    
 }
