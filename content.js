@@ -1,13 +1,18 @@
 replaceIcon();
 window.onload = function() {
     console.log("onload");
-    replaceHeader();
+    replaceXwithBird();
     replacePostButton();
+    removeForYouTab();
     //replaceHomeIcon();
 };
 
 window.onclick = function(){
     console.log("onclick");
+    removeForYouTab();
+    replacePostButton();
+    replaceXwithBird();
+
     //replaceHomeIcon();
 };
 
@@ -44,30 +49,43 @@ function replaceIcon(){
     }
 }
 
-async function replaceHeader(){
-    let headers = await waitForLogo();
+async function replaceXwithBird(){
+    let homeX = document.querySelector('a[aria-label="X"]');
+    if(homeX){
+        let imgReplace = homeX.getElementsByTagName("svg");
+        if (imgReplace.length > 0) {
+            imgReplace[0].outerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" width="36" height="33"></img>';
+        }
+    }
+    
+    /*let headers = await waitForLogo();
     if (headers.length > 0) {
         let imgReplace = headers[0].getElementsByTagName("svg");
         if (imgReplace.length > 0) {
-            imgReplace[0].outerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/2491px-Logo_of_Twitter.svg.png" width="38" height="35"></img>';
+            imgReplace[0].outerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" width="38" height="35"></img>';
         }
-    }
+    }*/
 }
 
-async function replacePostButton(){
-    let tweetButtons = await waitForButton();
-    if (tweetButtons.length > 17) {
-        let tweetButton = tweetButtons[17].getElementsByClassName("css-1jxf684 r-bcqeeo r-1ttztb7 r-qvutc0 r-poiln3");
-        if (tweetButton.length > 0) {
-            tweetButton[0].innerHTML = tweetButton[0].innerHTML.replace("Post", "Tweet");
+
+
+function replacePostButton(){
+    let tweetButton = document.querySelector('span[class="min-w-0 overflow-x-clip text-ellipsis whitespace-nowrap"]');
+    if (tweetButton) {
+            console.log(tweetButton)
+            tweetButton.innerHTML = tweetButton.innerHTML.replace("Post", "Tweet");
         }
-    }
+
 }
-async function removeForYouTab(){
-    let forYou = document.getElementById("base-ui-_R_1alpcp9j5d556_");
+function removeForYouTab(){
+    let forYou = document.querySelector('button[data-pinned-timeline="for-you"]');
     if(forYou){
-        forYou.remove()
+        forYou.remove();
     }
+    else{
+        console.log('failed to find "For You"');
+    }
+   
 }
 
 
@@ -89,11 +107,12 @@ const observer = new MutationObserver(mutations => {
     clearTimeout(sidebarTimeout);
     sidebarTimeout = setTimeout(() => {
         //replaceHomeIcon();
-        removeForYouTab();
-        replaceHeader();
+        replaceXwithBird();
         replacePostButton();
+        removeForYouTab()
+        console.log('observer');
         observer.disconnect(); // Disconnect after the first successful modification to avoid unnecessary loops
-    }, 100);
+    }, 1000);
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
